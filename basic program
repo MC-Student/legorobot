@@ -69,14 +69,14 @@ void turn_right()
 
 void astronaut_suits()
 {
-    go_forward(1000);
-    turn_right();
-    go_forward(2000);
     back_up(1000);
-    turn_left();
-    back_up(500);
     turn_right();
+    back_up(2000);
     go_forward(1000);
+    turn_left();
+    go_forward(500);
+    turn_right();
+    back_up(1000);
     }
     
 /*void get_processed_ore_cubes()
