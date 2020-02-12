@@ -1,0 +1,134 @@
+#include <kipr/botball.h>
+
+int speedright=100;
+int speedleft=110;
+#define TICKSIN90 1200
+#define TICKSIN45 200
+#define LEFTMOTOR 1
+#define RIGHTMOTOR 3
+/*the following function goes forward for the no. of ticks specified by that argument*/
+void go_forward(int ticks)
+{
+  cmpc(LEFTMOTOR);
+  while (gmpc(LEFTMOTOR)< ticks)
+  {
+  motor(LEFTMOTOR, speedleft);
+  motor(RIGHTMOTOR, speedright);
+  }
+  ao();
+  printf("finished going forward\n");
+}
+
+/*the following function goes for the no. of ticks specified by that argument*/
+void back_up(int ticks)
+{
+  cmpc(LEFTMOTOR);
+  while (-gmpc(LEFTMOTOR)< ticks)
+  {
+  motor(LEFTMOTOR, -speedleft);
+  motor(RIGHTMOTOR, -speedright);
+  }
+  ao();
+  printf("finished backup\n");
+}
+void turn_right()
+{
+    cmpc(LEFTMOTOR);
+  	while (gmpc(LEFTMOTOR)< TICKSIN90)
+  {
+  	motor(LEFTMOTOR, speedleft);
+  	motor(RIGHTMOTOR, -speedright);
+	}
+    printf("turnedright\n");
+  ao();
+}
+void turn_small_right()
+{
+    cmpc(LEFTMOTOR);
+  	while (gmpc(LEFTMOTOR)< TICKSIN45)
+  {
+  	motor(LEFTMOTOR, speedleft);
+  	motor(RIGHTMOTOR, -speedright);
+	}
+    printf("turnedsmallright\n");
+  ao();
+}
+void turn_small_left()
+{
+    cmpc(RIGHTMOTOR);
+  	while (gmpc(RIGHTMOTOR)< TICKSIN45)
+  {
+  	motor(LEFTMOTOR, -speedleft);
+  	motor(RIGHTMOTOR, speedright);
+	}
+    printf("turnedsmallleft\n");
+  ao();
+}
+
+void turn_left()
+{
+    cmpc(RIGHTMOTOR);
+  	while (gmpc(RIGHTMOTOR)< TICKSIN90)
+  {
+  	motor(LEFTMOTOR, -speedleft);
+  	motor(RIGHTMOTOR, speedright);
+	}
+    printf("turnedleft\n");
+  ao();
+}
+
+void astronaut_suits()
+{
+    back_up(1400);
+    go_forward(1800);
+    }
+
+void get_material_transport()
+{
+	go_forward(3000);
+	set_servo_position(0,1030);
+	back_up(2200);
+	turn_left();
+	go_forward(5000);
+    turn_small_right();
+    go_forward(750);
+    turn_small_left();
+    set_servo_position(1,600);
+    turn_left();
+}
+
+void get_ice()
+{
+    go_forward(500);
+    set_servo_position(1,1600);
+    msleep(1000);
+    set_servo_position(1,600);
+    go_forward(500);
+    set_servo_position(1,1600);
+    msleep(1000);
+    set_servo_position(1,600);
+    go_forward(500);
+    set_servo_position(1,1600);
+    msleep(1000);
+    set_servo_position(1,600);
+     go_forward(500);
+    set_servo_position(1,1600);
+    msleep(1000);
+    set_servo_position(1,600);
+}
+
+int main()
+{
+enable_servos();
+set_servo_position(0,10);
+set_servo_position(1,1600);
+printf("Hello World\n");
+//wait_for_light(0);
+shut_down_in(119);
+set_servo_position(0,10);
+astronaut_suits();
+get_material_transport();
+get_ice();
+//get_ice();
+return 0; 
+}
